@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from "react";
+import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+	const [files, setFiles] = useState<any | null>(null);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		if (e.target.files != null && e.target.files.length > 0) {
+			const file = e.target.files[0];
+			const fileReader = new FileReader();
+			fileReader.onloadend = () => {
+				const content = fileReader.result;
+				if (typeof content === "string") {
+					setFiles(JSON.parse(content))
+				}
+			};
+			fileReader.readAsText(file);
+		}
+	}
+
+	console.log(files)
+
+
+	return (
+		<div className="App">
+			<header className="App-header">
+				<input
+					type="file"
+					accept=".json"
+					onChange={handleChange}
+				/>
+			</header>
+		</div>
+	);
 }
 
 export default App;
