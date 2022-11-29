@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import "./App.css";
+import {Replay} from "./data/Replay";
+import {Map} from "./components/map/Map";
 
 function App() {
 
-	const [files, setFiles] = useState<any | null>(null);
+	const [replay, setReplay] = useState<Replay | null>(null);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files != null && e.target.files.length > 0) {
@@ -12,15 +14,12 @@ function App() {
 			fileReader.onloadend = () => {
 				const content = fileReader.result;
 				if (typeof content === "string") {
-					setFiles(JSON.parse(content))
+					setReplay(JSON.parse(content));
 				}
 			};
 			fileReader.readAsText(file);
 		}
-	}
-
-	console.log(files)
-
+	};
 
 	return (
 		<div className="App">
@@ -30,6 +29,7 @@ function App() {
 					accept=".json"
 					onChange={handleChange}
 				/>
+				{replay && <Map replay={replay}/>}
 			</header>
 		</div>
 	);
