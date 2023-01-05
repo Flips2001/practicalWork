@@ -3,12 +3,11 @@ import * as sc from "./point.sc";
 import {
 	created,
 	destroyed,
-	IsAttacked,
 	morph
 } from "../../data/Replay";
 
 interface CreatedPointPorps {
-	actions: created[] | destroyed[] | morph[] | IsAttacked[]
+	actions: created[] | destroyed[] | morph[]
 	size: {
 		width: number,
 		height: number
