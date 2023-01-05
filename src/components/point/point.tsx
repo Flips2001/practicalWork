@@ -13,8 +13,6 @@ interface PointProps {
 }
 
 export const Point: React.FunctionComponent<PointProps> = ({action, replay, size}) => {
-	if (action !== "attacks") {
-		return <CreatedPoint actions={replay.actions[action]} size={replay.map.size} trueSize={size}/>;
-	}
-	return <></>;
+	return <CreatedPoint actions={replay.actions[action]} size={replay.map.size} trueSize={size}/>;
+
 };

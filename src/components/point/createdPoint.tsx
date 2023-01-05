@@ -1,9 +1,14 @@
 import React from "react";
 import * as sc from "./point.sc";
-import {created} from "../../data/Replay";
+import {
+	created,
+	destroyed,
+	IsAttacked,
+	morph
+} from "../../data/Replay";
 
 interface CreatedPointPorps {
-	actions: created[]
+	actions: created[] | destroyed[] | morph[] | IsAttacked[]
 	size: {
 		width: number,
 		height: number
