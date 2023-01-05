@@ -1,11 +1,23 @@
 import React, {useState} from "react";
 import "./App.css";
-import {Replay} from "./data/Replay";
 import {Map} from "./components/map/Map";
+import {actionValues, Selector} from "./components/selector/Selector";
+import {validateOrReject} from "class-validator";
+import {replay} from "./data/Replay";
 
 function App() {
 
-	const [replay, setReplay] = useState<Replay | null>(null);
+	const [replay, setReplay] = useState<replay | null>(null);
+	const [selectedAction, setSelectedAction] = useState<actionValues | undefined>(undefined);
+
+	async function validateOrRejectExample(input: any) {
+		try {
+			await validateOrReject(input);
+			setReplay(input);
+		} catch (errors) {
+			console.log("Caught promise rejection (validation failed). Errors: ", errors);
+		}
+	}
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		if (e.target.files != null && e.target.files.length > 0) {
@@ -14,10 +26,17 @@ function App() {
 			fileReader.onloadend = () => {
 				const content = fileReader.result;
 				if (typeof content === "string") {
-					setReplay(JSON.parse(content));
+					const newData = JSON.parse(content);
+					validateOrRejectExample(newData);
 				}
 			};
 			fileReader.readAsText(file);
+		}
+	};
+
+	const filterActions = (value: { value: string, label: string } | null) => {
+		if (value && replay) {
+			setSelectedAction(value.value as actionValues);
 		}
 	};
 
@@ -29,7 +48,8 @@ function App() {
 					accept=".json"
 					onChange={handleChange}
 				/>
-				{replay && <Map replay={replay}/>}
+				<Selector onSelect={filterActions}/>
+				{replay && <Map replay={replay} action={selectedAction}/>}
 			</header>
 		</div>
 	);

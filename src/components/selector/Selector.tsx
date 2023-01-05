@@ -1,13 +1,27 @@
 import React from "react";
-import {Maps} from "../../maps/Maps";
-import {Replay} from "../../data/Replay";
+import Select from "react-select";
+
+export type actionValues = "created" | "destroyed" | "morphs" | "attacks"
 
 interface SelectorProps {
-	replay: Replay
+	onSelect: (value: { value: string, label: string } | null) => void
 }
 
-export const Selector: React.FunctionComponent<SelectorProps> = ({replay}) => {
-	return <div>
-		<img src={Maps[replay.map.name]} alt={"map"}/>
-	</div>;
+export const Selector: React.FunctionComponent<SelectorProps> = ({onSelect}) => {
+
+	const options = [
+		{value: "created", label: "Created units"},
+		{value: "destroyed", label: "Destroyed units"},
+		{value: "morphs", label: "Morphs"},
+		{value: "attacks", label: "Attacks"},
+	];
+
+	return (
+		<div>
+			<Select
+				options={options}
+				onChange={onSelect}
+			/>
+		</div>
+	);
 };
