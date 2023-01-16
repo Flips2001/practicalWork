@@ -6,7 +6,7 @@ import {
 	morph
 } from "../../data/Replay";
 
-interface CreatedPointPorps {
+interface CreatedPointProps {
 	actions: created[] | destroyed[] | morph[]
 	size: {
 		width: number,
@@ -18,7 +18,7 @@ interface CreatedPointPorps {
 	}
 }
 
-export const CreatedPoint: React.FunctionComponent<CreatedPointPorps> = ({actions, size, trueSize}) => {
+export const CreatedPoint: React.FunctionComponent<CreatedPointProps> = ({actions, size, trueSize}) => {
 
 	return (
 		<div>
