@@ -3,14 +3,7 @@ export type replay = {
 	map: map
 	players: player[]
 	possibleActions: string[]
-	actions: actions
-}
-
-export type actions = {
-	created: created[],
-	destroyed: destroyed[],
-	morphs: morph[]
-	attacks: IsAttacked[]
+	actionsByType: actions[]
 }
 
 type player = {
@@ -25,7 +18,6 @@ type size = {
 }
 
 type map = {
-	numOfStartPositions: number
 	name: string,
 	size: size
 }
@@ -36,26 +28,14 @@ type position = {
 	y: number;
 }
 
-export type created = {
-	unitId: string;
-	unitType: string;
-	position: position;
+export type actions = {
+	title: string;
+	actions: action[];
 }
 
-export type destroyed = {
-	unitId: string;
-	unitType: string;
-	position: position;
-}
 
-export type morph = {
+export type action = {
 	unitId: string;
-	unitType: string;
-	position: position;
-}
-
-export type IsAttacked = {
-	unitId: string;
-	attackType: string
+	type: string;
 	position: position;
 }

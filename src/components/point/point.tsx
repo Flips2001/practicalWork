@@ -1,10 +1,9 @@
 import React from "react";
-import {actionValues} from "../selector/Selector";
-import {replay} from "../../data/Replay";
+import {action, replay} from "../../data/Replay";
 import {CreatedPoint} from "./createdPoint";
 
 interface PointProps {
-	action: actionValues
+	action: action[];
 	replay: replay;
 	size: {
 		width: number,
@@ -13,8 +12,8 @@ interface PointProps {
 }
 
 export const Point: React.FunctionComponent<PointProps> = ({action, replay, size}) => {
-	if (action !== "attacks") {
-		return <CreatedPoint actions={replay.actions[action]} size={replay.map.size} trueSize={size}/>;
+	if (true) {
+		return <CreatedPoint actions={action} size={replay.map.size} trueSize={size}/>;
 	} else {
 		return <></>;
 	}

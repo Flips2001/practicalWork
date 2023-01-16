@@ -1,13 +1,9 @@
 import React from "react";
 import * as sc from "./point.sc";
-import {
-	created,
-	destroyed,
-	morph
-} from "../../data/Replay";
+import {action} from "../../data/Replay";
 
 interface CreatedPointProps {
-	actions: created[] | destroyed[] | morph[]
+	actions: action[]
 	size: {
 		width: number,
 		height: number

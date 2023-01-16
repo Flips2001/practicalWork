@@ -1,13 +1,12 @@
 import React from "react";
 import {Maps} from "../../maps/Maps";
-import {replay} from "../../data/Replay";
+import {action, replay} from "../../data/Replay";
 import {Point} from "../point/point";
 import * as sc from "./Map.sc";
-import {actionValues} from "../selector/Selector";
 
 interface MapProps {
 	replay: replay
-	action?: actionValues
+	action?: action[]
 }
 
 

@@ -1,14 +1,14 @@
 import React, {useState} from "react";
 import "./App.css";
 import {Map} from "./components/map/Map";
-import {actionValues, Selector} from "./components/selector/Selector";
+import {Selector} from "./components/selector/Selector";
 import {validateOrReject} from "class-validator";
-import {replay} from "./data/Replay";
+import {action, replay} from "./data/Replay";
 
 function App() {
 
 	const [replay, setReplay] = useState<replay | null>(null);
-	const [selectedAction, setSelectedAction] = useState<actionValues | undefined>(undefined);
+	const [selectedAction, setSelectedAction] = useState<action[] | undefined>(undefined);
 
 	async function validateOrRejectExample(input: any) {
 		try {
@@ -34,11 +34,13 @@ function App() {
 		}
 	};
 
-	const filterActions = (value: { value: string, label: string } | null) => {
+	const filterActions = (value: { value: number, label: string } | null) => {
 		if (value && replay) {
-			setSelectedAction(value.value as actionValues);
+			setSelectedAction(replay.actionsByType[value.value].actions);
 		}
 	};
+
+	console.log(replay);
 
 	return (
 		<div className="App">
@@ -48,7 +50,7 @@ function App() {
 					accept=".json"
 					onChange={handleChange}
 				/>
-				<Selector onSelect={filterActions}/>
+				<Selector onSelect={filterActions} data={replay?.actionsByType}/>
 				{replay && <Map replay={replay} action={selectedAction}/>}
 			</header>
 		</div>
