@@ -2,6 +2,7 @@ import React from "react";
 import {action} from "../../data/Replay";
 import {CreatCluster} from "./createCluster";
 import {DBSCAN} from "density-clustering";
+import {CreatRoseDiagram} from "../rosediagram/CreateRoseDiagram";
 
 export type size = {
 	width: number,
@@ -24,7 +25,7 @@ export const PlotClusters: React.FunctionComponent<PointProps> = ({mapSize, acti
 	});
 
 	const dbscan = new DBSCAN();
-	const clusters = dbscan.run(data, 130, 5);
+	const clusters = dbscan.run(data, 50, 5);
 
 	const clusterData = clusters.map((cluster) => {
 		return cluster.map((index) => {
@@ -36,17 +37,19 @@ export const PlotClusters: React.FunctionComponent<PointProps> = ({mapSize, acti
 		return aciton.position;
 	});
 
+
 	if (cluster) {
 		return (
 			<div>
 				{clusterData.map((cluster, index) => {
-					return <CreatCluster cluster={cluster} mapSize={mapSize} trueSize={size} color={colors[index]}/>;
+					return (<><CreatRoseDiagram cluster={cluster} mapSize={mapSize} trueSize={size}/>
+						<CreatCluster cluster={cluster} mapSize={mapSize} trueSize={size} color={colors[index]}/></>);
+
 				})}
 			</div>
 		);
 	}
 
 	return <CreatCluster cluster={notClusteredData} mapSize={mapSize} trueSize={size}/>;
-
 
 };

@@ -10,17 +10,13 @@ interface CreatClusterProps {
 	trueSize: size
 }
 
-export const CreatCluster: React.FunctionComponent<CreatClusterProps> = ({cluster, mapSize, trueSize, color}) => {
-	
+export const CreatCluster: React.FunctionComponent<CreatClusterProps> = ({cluster, color}) => {
+
 	return (
 		<div>
 			{cluster.map((point) => {
-				const position = {
-					x: point.x / mapSize.width * trueSize.width,
-					y: point.y / mapSize.height * trueSize.height
-				};
 				return (
-					<sc.Point position={position} color={color}/>
+					<sc.Point position={point} color={color}/>
 				);
 			})}
 		</div>

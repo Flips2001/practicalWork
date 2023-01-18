@@ -16,9 +16,23 @@ export const Map: React.FunctionComponent<MapProps> = ({replay, actions, cluster
 	img.src = Maps[replay.map.name];
 	const size = {height: img.height, width: img.width};
 
+	const newActions = actions?.reduce((acc: action[], action) => {
+		const newAction = {
+			...action,
+			position: {
+				x: action.position.x / replay.map.size.width * img.width,
+				y: action.position.y / replay.map.size.height * img.height,
+			}
+		};
+
+		return [...acc, newAction];
+	}, []);
+
+	console.log(newActions);
+
 	return (
 		<sc.Root>
-			{actions && <PlotClusters actions={actions} mapSize={replay.map.size} size={size} cluster={cluster}/>}
+			{newActions && <PlotClusters actions={newActions} mapSize={replay.map.size} size={size} cluster={cluster}/>}
 			<img src={Maps[replay.map.name]} alt={"map"}/>
 		</sc.Root>
 	);
