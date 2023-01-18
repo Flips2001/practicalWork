@@ -1,14 +1,17 @@
 import React, {useState} from "react";
 import "./App.css";
 import {Map} from "./components/map/Map";
-import {Selector} from "./components/selector/Selector";
+import {Selector} from "./components/inputs/Selector";
 import {validateOrReject} from "class-validator";
 import {action, replay} from "./data/Replay";
+import {RoseDiagram} from "./components/rosediagram/RoseDiagram";
+import {Checkbox} from "./components/inputs/Checkbox";
 
 function App() {
 
 	const [replay, setReplay] = useState<replay | null>(null);
 	const [selectedAction, setSelectedAction] = useState<action[] | undefined>(undefined);
+	const [checked, setChecked] = React.useState(false);
 
 	async function validateOrRejectExample(input: any) {
 		try {
@@ -39,9 +42,7 @@ function App() {
 			setSelectedAction(replay.actionsByType[value.value].actions);
 		}
 	};
-
-	console.log(replay);
-
+	
 	return (
 		<div className="App">
 			<header className="App-header">
@@ -51,7 +52,9 @@ function App() {
 					onChange={handleChange}
 				/>
 				<Selector onSelect={filterActions} data={replay?.actionsByType}/>
-				{replay && <Map replay={replay} action={selectedAction}/>}
+				<Checkbox onSelect={(checked) => setChecked(checked)} title={"Use DBSCAN to cluster data"}/>
+				{replay && <Map replay={replay} actions={selectedAction} cluster={checked}/>}
+				<RoseDiagram size={300}/>
 			</header>
 		</div>
 	);

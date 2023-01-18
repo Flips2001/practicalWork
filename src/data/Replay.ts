@@ -2,7 +2,6 @@ export type replay = {
 	name: string
 	map: map
 	players: player[]
-	possibleActions: string[]
 	actionsByType: actions[]
 }
 
@@ -23,7 +22,7 @@ type map = {
 }
 
 
-type position = {
+export type position = {
 	x: number;
 	y: number;
 }

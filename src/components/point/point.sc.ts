@@ -5,10 +5,11 @@ export interface RootPros {
 		x: number;
 		y: number
 	}
+	color?: string
 }
 
 export const Point = styled("div")<RootPros>`
-  background-color: red;
+  background-color: ${(props) => props.color ?? "red"};
   width: 10px;
   height: 10px;
   position: absolute;
