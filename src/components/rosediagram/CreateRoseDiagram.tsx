@@ -1,16 +1,16 @@
 import React from "react";
 import * as sc from "./CreateRoseDiagram.sc";
 import {position} from "../../data/Replay";
-import {size} from "../point/point";
+import {RoseDiagram} from "./RoseDiagram";
+import {CreatCluster} from "../point/createCluster";
 
 
 interface CreatRoseDiagramProps {
 	cluster: position[]
-	mapSize: size
-	trueSize: size
+	showScatterData?: boolean
 }
 
-export const CreatRoseDiagram: React.FunctionComponent<CreatRoseDiagramProps> = ({cluster, mapSize, trueSize}) => {
+export const CreatRoseDiagram: React.FunctionComponent<CreatRoseDiagramProps> = ({cluster, showScatterData}) => {
 
 	const calcCenter = (data: position[]) => {
 
@@ -26,13 +26,41 @@ export const CreatRoseDiagram: React.FunctionComponent<CreatRoseDiagramProps> = 
 		return center;
 	};
 
+	const separateByRadialPosition = (data: position[], center: position, numBulks: number) => {
+		const bulks: position[][] = Array.from({length: numBulks}, () => []);
+		data.forEach(point => {
+			const dx = point.x - center.x;
+			const dy = point.y - center.y;
+			const angle = Math.atan2(dy, dx);
+			const bulkIndex = Math.floor((angle + Math.PI) / (2 * Math.PI) * numBulks);
+			bulks[bulkIndex].push(point);
+		});
+		return bulks;
+	};
+
+	const colors = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "maroon", "olive", "navy", "teal", "gold", "lavender", "crimson"];
+
 	const center = calcCenter(cluster);
+	const bulks = separateByRadialPosition(cluster, center, 6).reverse();
+
+	const data = bulks.map((bulk, index) => {
+		return {
+			angle: index.toString(),
+			"percentOfItems": (bulk.length / cluster.length) * 2
+		};
+	});
+
+	console.log(data);
 
 	return (
-		<div>
-			<></>
-			<sc.Point position={center} color={"pink"}/>
-		</div>
+		<>
+			{showScatterData && bulks.map((cluster, index) => {
+				return <CreatCluster cluster={cluster} color={colors[index]}/>;
+			})}
+			<sc.Root position={center}>
+				<RoseDiagram data={data} size={300}/>
+			</sc.Root>
+		</>
 	);
 };
 

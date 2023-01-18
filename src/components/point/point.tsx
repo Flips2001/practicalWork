@@ -11,12 +11,12 @@ export type size = {
 
 interface PointProps {
 	actions: action[];
-	mapSize: size
-	size: size;
 	cluster?: boolean
+	showRose?: boolean
+	showScatterData?: boolean
 }
 
-export const PlotClusters: React.FunctionComponent<PointProps> = ({mapSize, actions, size, cluster,}) => {
+export const PlotClusters: React.FunctionComponent<PointProps> = ({actions, cluster, showRose, showScatterData}) => {
 
 	const colors = ["red", "orange", "yellow", "green", "blue", "purple", "pink", "maroon", "olive", "navy", "teal", "gold", "lavender", "crimson"];
 
@@ -25,7 +25,7 @@ export const PlotClusters: React.FunctionComponent<PointProps> = ({mapSize, acti
 	});
 
 	const dbscan = new DBSCAN();
-	const clusters = dbscan.run(data, 50, 5);
+	const clusters = dbscan.run(data, 50, 6);
 
 	const clusterData = clusters.map((cluster) => {
 		return cluster.map((index) => {
@@ -42,14 +42,13 @@ export const PlotClusters: React.FunctionComponent<PointProps> = ({mapSize, acti
 		return (
 			<div>
 				{clusterData.map((cluster, index) => {
-					return (<><CreatRoseDiagram cluster={cluster} mapSize={mapSize} trueSize={size}/>
-						<CreatCluster cluster={cluster} mapSize={mapSize} trueSize={size} color={colors[index]}/></>);
-
+					if (showRose)
+						return <CreatRoseDiagram cluster={cluster} showScatterData={showScatterData}/>;
+					else
+						return <CreatCluster cluster={cluster} color={colors[index]}/>;
 				})}
 			</div>
 		);
 	}
-
-	return <CreatCluster cluster={notClusteredData} mapSize={mapSize} trueSize={size}/>;
-
+	return <CreatCluster cluster={notClusteredData}/>;
 };

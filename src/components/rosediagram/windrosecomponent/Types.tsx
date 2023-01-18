@@ -127,6 +127,7 @@ export interface ChartPropTypes extends React.HTMLProps<HTMLDivElement> {
 	legendGap: number;
 	hideLabel?: boolean;
 	hideLegend?: boolean;
+	hideCircles?: boolean;
 }
 
 export const ChartDefaultProps: ChartPropTypes = {

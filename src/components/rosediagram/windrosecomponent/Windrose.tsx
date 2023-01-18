@@ -18,7 +18,8 @@ export function Chart(props: ChartPropTypes) {
 		responsive,
 		legendGap,
 		hideLabel,
-		hideLegend
+		hideLegend,
+		hideCircles,
 	} = props;
 	const containerRef = React.useRef<SVGSVGElement>(null);
 	const axisContainerRef = React.useRef<HTMLDivElement>(null);
@@ -153,47 +154,47 @@ export function Chart(props: ChartPropTypes) {
 					(90 - angleOffset)
 				})translate(${outerRadius + 30},0)`;
 			});
-		{
-			!hideLabel &&
-			label
-				.append("text")
-				// eslint-disable-next-line no-confusing-arrow
-				.attr("transform", (d, _i) =>
+
+		!hideLabel &&
+		label
+			.append("text")
+			// eslint-disable-next-line no-confusing-arrow
+			.attr("transform", (d, _i) =>
+				// @ts-ignore
+				(x(d.angle) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI < Math.PI)
+					? "rotate(90)translate(0,16)"
+					: "rotate(-90)translate(0,-9)",
+			)
+			.attr("transform", "rotate(90)translate(0,-9)")
+			.text((d) => d.angle)
+			.style("font-size", 14);
+		!hideCircles && g.selectAll(".axis")
+			.data(d3.range(angle.domain()[1]))
+			.enter()
+			.append("g")
+			.attr("class", "axis")
+			.attr("transform", (d) => `rotate(${(angle(d) * 180) / Math.PI})`)
+			.call(
+				d3
 					// @ts-ignore
-					(x(d.angle) + x.bandwidth() / 2 + Math.PI / 2) % (2 * Math.PI < Math.PI)
-						? "rotate(90)translate(0,16)"
-						: "rotate(-90)translate(0,-9)",
-				)
-				.attr("transform", "rotate(90)translate(0,-9)")
-				.text((d) => d.angle)
-				.style("font-size", 14);
-			g.selectAll(".axis")
-				.data(d3.range(angle.domain()[1]))
-				.enter()
-				.append("g")
-				.attr("class", "axis")
-				.attr("transform", (d) => `rotate(${(angle(d) * 180) / Math.PI})`)
-				.call(
-					d3
-						// @ts-ignore
-						.axisLeft()
-						// @ts-ignore
-						.scale(radius.copy().range([-innerRadius, -(outerRadius + 10)])),
-				);
-		}
+					.axisLeft()
+					// @ts-ignore
+					.scale(radius.copy().range([-innerRadius, -(outerRadius + 10)])),
+			);
+
 		const yAxis = g.append("g").attr("text-anchor", "middle");
 		const yTick = yAxis
 			.selectAll("g")
 			.data(y.ticks(3).slice(1))
 			.enter()
 			.append("g");
-		yTick
+		!hideCircles && yTick
 			.append("circle")
 			.attr("fill", "none")
 			.attr("stroke", "gray")
 			.attr("stroke-dasharray", "4,4")
 			.attr("r", y);
-		yTick
+		!hideCircles && yTick
 			.append("text")
 			.attr("y", (d) => -y(d))
 			.attr("dy", "-0.35em")

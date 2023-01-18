@@ -8,10 +8,12 @@ interface MapProps {
 	replay: replay
 	actions?: action[]
 	cluster?: boolean
+	showRose?: boolean
+	showScatterData?: boolean
 }
 
 
-export const Map: React.FunctionComponent<MapProps> = ({replay, actions, cluster}) => {
+export const Map: React.FunctionComponent<MapProps> = ({replay, actions, cluster, showRose, showScatterData}) => {
 	const img = new Image();
 	img.src = Maps[replay.map.name];
 	const size = {height: img.height, width: img.width};
@@ -32,7 +34,8 @@ export const Map: React.FunctionComponent<MapProps> = ({replay, actions, cluster
 
 	return (
 		<sc.Root>
-			{newActions && <PlotClusters actions={newActions} mapSize={replay.map.size} size={size} cluster={cluster}/>}
+			{newActions &&
+          <PlotClusters actions={newActions} cluster={cluster} showRose={showRose} showScatterData={showScatterData}/>}
 			<img src={Maps[replay.map.name]} alt={"map"}/>
 		</sc.Root>
 	);

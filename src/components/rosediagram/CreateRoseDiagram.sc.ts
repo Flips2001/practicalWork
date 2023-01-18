@@ -5,14 +5,13 @@ export interface RootPros {
 		x: number;
 		y: number
 	}
-	color?: string
 }
 
-export const Point = styled("div")<RootPros>`
-  background-color: ${(props) => props.color ?? "pink"};
-  width: 10px;
-  height: 10px;
+export const Root = styled("div")<RootPros>`
   position: absolute;
   left: ${(props) => props.position.x}px;
   bottom: ${(props) => props.position.y}px;
+  height: 300px;
+  width: 300px;
+  transform: translate(-50%, 50%) rotate(-45deg);
 `;
