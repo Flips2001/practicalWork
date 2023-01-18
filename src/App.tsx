@@ -5,6 +5,7 @@ import {Selector} from "./components/inputs/Selector";
 import {validateOrReject} from "class-validator";
 import {action, replay} from "./data/Replay";
 import {Checkbox} from "./components/inputs/Checkbox";
+import * as sc from "./App.sc";
 
 function App() {
 
@@ -48,19 +49,28 @@ function App() {
 
 	return (
 		<div className="App">
-			<header className="App-header">
-				<input
+			<sc.TitleContainer>
+				<sc.Title>
+					Data-visualiser
+				</sc.Title>
+			</sc.TitleContainer>
+			<sc.Root>
+				<sc.InputSideBar>
+					<Selector onSelect={filterActions} data={replay?.actionsByType}/>
+					<Checkbox onSelect={setCluster} title={"Use DBSCAN to cluster data"}/>
+					<Checkbox onSelect={setShowRose} title={"Show clustered data as rose diagram"} disabled={!cluster}/>
+					<Checkbox onSelect={setShowScatterData} title={"Show clustered data"} disabled={!showRose}/>
+				</sc.InputSideBar>
+				<sc.MapContainer><input
 					type="file"
 					accept=".json"
 					onChange={handleChange}
 				/>
-				<Selector onSelect={filterActions} data={replay?.actionsByType}/>
-				<Checkbox onSelect={setCluster} title={"Use DBSCAN to cluster data"}/>
-				<Checkbox onSelect={setShowRose} title={"Show clustered data as rose diagram"} disabled={!cluster}/>
-				<Checkbox onSelect={setShowScatterData} title={"Show clustered data"} disabled={!showRose}/>
 				{replay && <Map replay={replay} actions={selectedAction} cluster={cluster} showRose={showRose}
 					showScatterData={showScatterData}/>}
-			</header>
+				</sc.MapContainer>
+			</sc.Root>
+
 		</div>
 	);
 }
