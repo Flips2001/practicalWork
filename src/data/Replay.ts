@@ -5,15 +5,26 @@ export type replay = {
 	actionsByType: actions[]
 }
 
+export type actions = {
+	title: string;
+	actions: action[];
+}
+
+export type action = {
+	unitId: string;
+	type: string;
+	position: position;
+}
+
+export type position = {
+	x: number;
+	y: number;
+}
+
 type player = {
 	id: number;
 	name: string;
 	startLocation: number;
-}
-
-type size = {
-	width: number;
-	height: number;
 }
 
 type map = {
@@ -21,20 +32,13 @@ type map = {
 	size: size
 }
 
-
-export type position = {
-	x: number;
-	y: number;
-}
-
-export type actions = {
-	title: string;
-	actions: action[];
+type size = {
+	width: number;
+	height: number;
 }
 
 
-export type action = {
-	unitId: string;
-	type: string;
-	position: position;
-}
+
+
+
+
