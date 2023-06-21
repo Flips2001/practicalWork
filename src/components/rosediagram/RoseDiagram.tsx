@@ -9,9 +9,10 @@ type chartData = {
 export interface RoseDiagramProps {
 	size?: number
 	data: chartData[]
+	color?: string;
 }
 
-export const RoseDiagram: React.FunctionComponent<RoseDiagramProps> = ({size, data}) => {
+export const RoseDiagram: React.FunctionComponent<RoseDiagramProps> = ({size, data, color}) => {
 
 	return (
 		<div>

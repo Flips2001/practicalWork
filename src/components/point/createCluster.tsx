@@ -13,7 +13,7 @@ export const CreatCluster: React.FunctionComponent<CreatClusterProps> = ({cluste
 		<div>
 			{cluster.map((point) => {
 				return (
-					<sc.Point position={point} color={color}/>
+					<sc.Point position={point} color={color} key={point.x / point.y}/>
 				);
 			})}
 		</div>

@@ -72,14 +72,14 @@ export function Chart(props: ChartPropTypes) {
 		const z = d3
 			.scaleOrdinal()
 			.range([
-				"#8e44ad",
-				"#4242f4",
-				"#42c5f4",
-				"#42f4ce",
-				"#42f456",
-				"#adf442",
-				"#f4e242",
-				"#f4a142",
+				// "#8e44ad",
+				// "#4242f4",
+				// "#42c5f4",
+				// "#42f4ce",
+				// "#42f456",
+				// "#adf442",
+				// "#f4e242",
+				// "#f4a142",
 				"#f44242",
 			]);
 		x.domain(data.map((d) => String(d.angle)));

@@ -25,6 +25,12 @@
       "startLocation": 2
     }
   ],
+  "possibleActions": [
+    "created",
+    "destroyed",
+    "morphs",
+    "attacks"
+  ],
   "actionsByType": [
     {
       "title": "created",
