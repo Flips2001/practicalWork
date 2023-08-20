@@ -8,10 +8,9 @@ import {CreatCluster} from "../point/createCluster";
 interface CreatRoseDiagramProps {
 	cluster: position[]
 	showScatterData?: boolean
-	color?: string;
 }
 
-export const CreatRoseDiagram: React.FunctionComponent<CreatRoseDiagramProps> = ({cluster, showScatterData, color}) => {
+export const CreatRoseDiagram: React.FunctionComponent<CreatRoseDiagramProps> = ({cluster, showScatterData}) => {
 
 	const calcCenter = (data: position[]) => {
 
@@ -57,7 +56,7 @@ export const CreatRoseDiagram: React.FunctionComponent<CreatRoseDiagramProps> = 
 				return <CreatCluster cluster={cluster} color={colors[index]} key={index}/>;
 			})}
 			<sc.Root position={center}>
-				<RoseDiagram data={data} size={300} color={color}/>
+				<RoseDiagram data={data} size={300}/>
 			</sc.Root>
 		</>
 	);

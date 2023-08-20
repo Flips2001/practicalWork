@@ -1,5 +1,9 @@
-import json
+import base64
 import glob
+import json
+import mimetypes
+import re
+
 
 def creat_json(line):
     return {
@@ -61,37 +65,84 @@ def load_data(filename):
     return my_dict
 
 
-def dump_data(my_dict):
-    data = []
-    data.append({
-        "title": "created",
-        "actions": my_dict["created"],
-    })
-    data.append(
+def generateActionsbyType(my_dict):
+    actionsByType = []
+    actionsByType.append(
+        {
+            "title": "created",
+            "actions": my_dict["created"],
+        }
+    )
+    actionsByType.append(
         {
             "title": "destroyed",
             "actions": my_dict["destroyed"],
         }
     )
-    data.append(
+    actionsByType.append(
         {
             "title": "attacks",
             "actions": my_dict["attacks"],
         }
     )
-    data.append(
+    actionsByType.append(
         {
             "title": "morphs",
             "actions": my_dict["morphs"],
         }
     )
-    with open('data.json', 'w') as f:
-        json.dump(data, f)
+
+    return actionsByType
+
+
+def get_replay_header(filename):
+    with open(filename, "r") as file:
+        text = file.read()
+        rep_path_match = re.search(r"RepPath: .*\\(.+?)\.rep", text)
+        map_name_match = re.search(r"MapName: (.+)", text)
+        map_size_match = re.search(r"MapSize: (\d+),(\d+)", text)
+
+        rep_path = rep_path_match.group(1)
+        map_name = map_name_match.group(1)
+
+        width = int(map_size_match.group(1))
+        height = int(map_size_match.group(2))
+
+        size = {
+            "width": width,
+            "height": height
+        }
+
+    return rep_path, map_name, size
+
+
+def convert_image(image_path):
+    with open(image_path, 'rb') as image_file:
+        mime_type, _ = mimetypes.guess_type(image_path)
+        encoded_string = base64.b64encode(image_file.read()).decode()
+        data_uri = f"data:{mime_type};base64,{encoded_string}"
+    return data_uri
 
 
 def convert_data(filename):
-    data = load_data(filename)
-    dump_data(data)
+    actions = load_data(filename)
+    actions_by_type = generateActionsbyType(actions)
+
+    rep_path, map_name, size = get_replay_header(filename)
+
+    data = {
+        "name": rep_path,
+        "map": {
+            "name": map_name,
+            "image": convert_image(f"maps/{map_name}.jpg"),
+            "size": size,
+        },
+        "possibleActions": ["created", "destroyed", "attacks", "morphs"],
+        "actionsByType": actions_by_type,
+    }
+
+    with open('data.json', 'w') as f:
+        json.dump(data, f)
 
 
 # Press the green button in the gutter to run the script.

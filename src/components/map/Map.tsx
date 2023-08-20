@@ -1,5 +1,4 @@
 import React from "react";
-import {Maps} from "../../maps/Maps";
 import {action, replay} from "../../data/Replay";
 import {PlotClusters} from "../point/point";
 import * as sc from "./Map.sc";
@@ -15,8 +14,7 @@ interface MapProps {
 
 export const Map: React.FunctionComponent<MapProps> = ({replay, actions, cluster, showRose, showScatterData}) => {
 	const img = new Image();
-	img.src = Maps[replay.map.name];
-	const size = {height: img.height, width: img.width};
+	img.src = replay.map.image;
 
 	const newActions = actions?.reduce((acc: action[], action) => {
 		const newAction = {
@@ -30,13 +28,11 @@ export const Map: React.FunctionComponent<MapProps> = ({replay, actions, cluster
 		return [...acc, newAction];
 	}, []);
 
-	console.log(newActions);
-
 	return (
 		<sc.Root>
 			{newActions &&
           <PlotClusters actions={newActions} cluster={cluster} showRose={showRose} showScatterData={showScatterData}/>}
-			<img src={Maps[replay.map.name]} alt={"map"}/>
+			<img src={replay.map.image} alt={"map"}/>
 		</sc.Root>
 	);
 };
