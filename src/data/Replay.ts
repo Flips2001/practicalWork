@@ -10,8 +10,9 @@ export type actions = {
 }
 
 export type action = {
+	action: string;
 	unitId: string;
-	type: string;
+	unitType: string;
 	position: position;
 }
 

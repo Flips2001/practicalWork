@@ -7,8 +7,9 @@ import re
 
 def creat_json(line):
     return {
+        "action": line[2],
         "unitId": line[3],
-        "type": line[4],
+        "unitType": line[4],
         "position": {
             "x": line[5].strip("("),
             "y": line[6].strip(")\n"),
