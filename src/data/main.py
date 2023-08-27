@@ -5,7 +5,7 @@ import mimetypes
 import re
 
 
-def creat_json(line):
+def create_json(line):
     return {
         "action": line[2],
         "unitId": line[3],
@@ -20,17 +20,17 @@ def creat_json(line):
 def fill_dict(line, my_dict):
     if line[2] == "Created":
         my_dict["created"].append(
-            creat_json(line)
+            create_json(line)
         )
 
     if line[2] == "Destroyed":
         my_dict["destroyed"].append(
-            creat_json(line)
+            create_json(line)
         )
 
     if line[2] == "Morph":
         my_dict["morphs"].append(
-            creat_json(line)
+            create_json(line)
         )
 
     if line[2] == "IsAttacked":
@@ -46,7 +46,7 @@ def fill_dict(line, my_dict):
         )
 
 
-def load_data(filename):
+def get_actions(filename):
     my_dict = {
         'created': [],
         'destroyed': [],
@@ -66,34 +66,22 @@ def load_data(filename):
     return my_dict
 
 
-def generateActionsbyType(my_dict):
-    actionsByType = []
-    actionsByType.append(
-        {
-            "title": "created",
-            "actions": my_dict["created"],
-        }
-    )
-    actionsByType.append(
-        {
-            "title": "destroyed",
-            "actions": my_dict["destroyed"],
-        }
-    )
-    actionsByType.append(
-        {
-            "title": "attacks",
-            "actions": my_dict["attacks"],
-        }
-    )
-    actionsByType.append(
-        {
-            "title": "morphs",
-            "actions": my_dict["morphs"],
-        }
-    )
+def generate_actions_by_type(my_dict):
+    actions_by_type = [{
+        "title": "created",
+        "actions": my_dict["created"],
+    }, {
+        "title": "destroyed",
+        "actions": my_dict["destroyed"],
+    }, {
+        "title": "attacks",
+        "actions": my_dict["attacks"],
+    }, {
+        "title": "morphs",
+        "actions": my_dict["morphs"],
+    }]
 
-    return actionsByType
+    return actions_by_type
 
 
 def get_replay_header(filename):
@@ -126,20 +114,25 @@ def convert_image(image_path):
 
 
 def convert_data(filename):
-    actions = load_data(filename)
-    actions_by_type = generateActionsbyType(actions)
+    actions = get_actions(filename)
+    actions_by_type = generate_actions_by_type(actions)
 
-    rep_path, map_name, size = get_replay_header(filename)
+    rep_path, map_name, size \
+        = get_replay_header(filename)
+
+    map_data = {
+        "name": map_name,
+        "image": convert_image(f"maps/{map_name}.jpg"),
+        "size": size
+    }
 
     data = {
         "name": rep_path,
-        "map": {
-            "name": map_name,
-            "image": convert_image(f"maps/{map_name}.jpg"),
-            "size": size,
-        },
-        "possibleActions": ["created", "destroyed", "attacks", "morphs"],
-        "actionsByType": actions_by_type,
+        "map": map_data,
+        "possibleActions": [
+            "created", "destroyed", "attacks", "morphs"
+        ],
+        "actionsByType": actions_by_type
     }
 
     with open('data.json', 'w') as f:
@@ -150,5 +143,3 @@ def convert_data(filename):
 if __name__ == '__main__':
     text_files = glob.glob('*.txt')
     convert_data(text_files[0])
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
