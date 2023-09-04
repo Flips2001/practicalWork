@@ -8,11 +8,11 @@ import re
 def create_json(line):
     return {
         "action": line[2],
-        "unitId": line[3],
+        "unitId": int(line[3]),
         "unitType": line[4],
         "position": {
-            "x": line[5].strip("("),
-            "y": line[6].strip(")\n"),
+            "x": int(line[5].strip("(")),
+            "y": int(line[6].strip(")\n")),
         },
     }
 
@@ -34,13 +34,15 @@ def fill_dict(line, my_dict):
         )
 
     if line[2] == "IsAttacked":
+        print(line)
         my_dict["attacks"].append(
             {
-                "unitId": line[2],
+                "action": "isAttacked",
+                "unitId": int(line[1]),
                 "type": line[3].strip("()"),
                 "position": {
-                    "x": line[4].strip("("),
-                    "y": line[5].strip(")\n"),
+                    "x": int(line[4].strip("(")),
+                    "y": int(line[5].strip(")\n")),
                 },
             }
         )
