@@ -12,17 +12,8 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm run build`
+### How to use
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## How to use
-
-You can upload some data and this app plots the data on the map for you. You can then let the app cluste
+You can upload some data and this app plots the data on the map for you. You can then let the app cluste you data using DBSCAN and it also proviedes the ability to show rose diagrams. 
+To convert the data, use the script provided in the [main.py](https://github.com/Flips2001/practicalWork/blob/main/src/data/main.py) file
 
