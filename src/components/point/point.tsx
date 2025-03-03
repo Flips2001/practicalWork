@@ -45,7 +45,7 @@ export const PlotClusters: React.FunctionComponent<PointProps> = ({actions, clus
 					if (showRose)
 						return <CreatRoseDiagram cluster={cluster} showScatterData={showScatterData}/>;
 					else
-						return <CreatCluster cluster={cluster} color={colors[index]}/>;
+						return <CreatCluster cluster={cluster} color={colors[index % colors.length]}/>;
 				})}
 			</div>
 		);
