@@ -2,11 +2,7 @@
 import React from "react";
 import * as d3 from "d3";
 import {Axis, AxisContainer} from "./WindRoseChart.style";
-import {
-	ChartDefaultProps,
-	ChartPropTypes,
-	DataType
-} from "./Types";
+import {ChartDefaultProps, ChartPropTypes, DataType} from "./Types";
 import {useResponsive} from "./useResponsive";
 
 export function Chart(props: ChartPropTypes) {
@@ -98,6 +94,7 @@ export function Chart(props: ChartPropTypes) {
 		// radius.domain([innerRadius, outerRadius]);
 		const angleOffset = -360.0 / data.length / 2.0;
 		// @ts-ignore
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const stackGen: d3.Stack<any, DataType, string> = d3
 			.stack()
 			.keys(columns.slice(1));

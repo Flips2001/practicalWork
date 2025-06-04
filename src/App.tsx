@@ -19,7 +19,7 @@ function App() {
 	const [showRose, setShowRose] = React.useState(false);
 	const [showScatterData, setShowScatterData] = React.useState(false);
 
-	function validateOrRejectExample(input: any) {
+	function validateOrRejectExample(input: unknown) {
 		const validationResult = replaySchema.safeParse(input);
 		if (!validationResult.success) {
 			console.error("Validation failed:", validationResult.error);
@@ -59,7 +59,7 @@ function App() {
 		<div className="App">
 			<sc.TitleContainer>
 				<sc.Title>
-                    Data-visualiser
+					Data-visualiser
 				</sc.Title>
 			</sc.TitleContainer>
 			<sc.Root>
