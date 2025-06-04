@@ -5,7 +5,7 @@
 You can upload some data and this app plots the data on the map for you. You can then let the app cluster you data using
 DBSCAN. It also provides the ability to show rose diagrams.
 To convert the data, use the script provided in
-the [main.py](https://github.com/Flips2001/practicalWork/blob/main/src/data/main.py) file
+the [main.py](https://github.com/Flips2001/practicalWork/blob/main/src/data/main.py) file. This script should be put into the folder containing the original datas text file.
 
 ## Available Scripts
 
