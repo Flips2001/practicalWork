@@ -2,7 +2,11 @@
 import React from "react";
 import * as d3 from "d3";
 import {Axis, AxisContainer} from "./WindRoseChart.style";
-import {ChartDefaultProps, ChartPropTypes, DataType} from "./Types";
+import {
+	ChartDefaultProps,
+	ChartPropTypes,
+	DataType
+} from "./Types";
 import {useResponsive} from "./useResponsive";
 
 export function Chart(props: ChartPropTypes) {

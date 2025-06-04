@@ -34,9 +34,12 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "gh-pages": "^6.3.0"
   },
+  "homepage": "https://flips2001.github.io/practicalWork",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build -u 'github-actions[bot] <support+actions@github.com>'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
